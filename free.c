@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkeskin <kkeskin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/29 16:44:10 by kkeskin           #+#    #+#             */
-/*   Updated: 2026/03/29 23:44:51 by kkeskin          ###   ########.fr       */
+/*   Created: 2026/03/30 04:46:36 by kkeskin           #+#    #+#             */
+/*   Updated: 2026/03/30 04:48:17 by kkeskin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-// ./philo 5 800 200 200 [5]
-
-int	main(int argc, char *argv[])
+void	free_thread_mutex(t_table *table)
 {
-	if (philo(argc, argv))
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+	if (table->philos)
+		free(table->philo_num);
+	if (table->forks)
+		free(table->forks);
 }

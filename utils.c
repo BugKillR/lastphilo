@@ -6,7 +6,7 @@
 /*   By: kkeskin <kkeskin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 17:03:16 by kkeskin           #+#    #+#             */
-/*   Updated: 2026/03/29 17:12:44 by kkeskin          ###   ########.fr       */
+/*   Updated: 2026/03/29 23:46:29 by kkeskin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,9 @@ int	ft_isdigit(int c)
 	if ('0' <= c && c <= '9')
 		return (1);
 	return (0);
+}
+
+void	print_error(char *message)
+{
+	printf("%s", message);
 }

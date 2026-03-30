@@ -6,29 +6,32 @@
 /*   By: kkeskin <kkeskin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 16:45:08 by kkeskin           #+#    #+#             */
-/*   Updated: 2026/03/29 18:52:39 by kkeskin          ###   ########.fr       */
+/*   Updated: 2026/03/30 04:46:06 by kkeskin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	error_exit(char *message)
-{
-	printf("%s", message);
-}
-
 static int	argument_control(int argc, char *argv[])
 {
 	int	i;
+	int	k;
 	int	num;
 
 	i = 1;
-	if (argc < 5 || 6 < argc)
-		return (1);
-	while (argv[i])
+	while (i < argc)
 	{
+		k = 0;
 		if (atoi_safe(argv[i], &num))
 			return (1);
+		while (argv[i][k] == '-' || argv[i][k] == '+')
+			k++;
+		while (argv[i][k])
+		{
+			if (!ft_isdigit(argv[i][k]))
+				return (print_error("The input is not a correct digit!\n"), 1);
+			k++;
+		}
 		i++;
 	}
 	return (0);
@@ -56,10 +59,21 @@ static int	parser(int argc, char *argv[], t_table *table)
 		table->num_limit_meals = -1;
 	if (table->philo_num <= 0 || table->time_to_die <= 0
 		|| table->time_to_eat <= 0 || table->time_to_sleep <= 0)
-		return (EXIT_FAILURE);
+		return (print_error("Enter a valid input!\n"), EXIT_FAILURE);
 	if (argc == 6)
 		if (table->num_limit_meals <= 0)
-			return (EXIT_FAILURE);
+			return (print_error("Enter a valid input!\n"), EXIT_FAILURE);
+	return (EXIT_SUCCESS);
+}
+
+static int	arg_count(int argc)
+{
+	if (argc < 5 || 6 < argc)
+	{
+		print_error("./philo number_of_philo time_to_die time_to_eat ");
+		print_error("time_to_sleep [number_of_times_each_philo_must_eat]\n");
+		return (EXIT_FAILURE);
+	}
 	return (EXIT_SUCCESS);
 }
 
@@ -67,14 +81,12 @@ int	philo(int argc, char *argv[])
 {
 	t_table	table;
 
-	if (argument_control(argc, argv) || parser(argc, argv, &table))
-	{
-		error_exit("* Enter values higher than 0!\n");
-		error_exit("* ./philo number_of_philo time_to_die time_to_eat ");
-		error_exit("time_to_sleep [number_of_times_each_philo_must_eat]\n");
+	if (arg_count(argc))
 		return (EXIT_FAILURE);
-	}
-	//init_program(&table);
+	if (argument_control(argc, argv) || parser(argc, argv, &table))
+		return (EXIT_FAILURE);
+	if (init_program(&table))
+		return (EXIT_FAILURE);
 	//start_dinner(&table);
 	//clean(&table);
 	return (EXIT_SUCCESS);
