@@ -6,7 +6,7 @@
 /*   By: kkeskin <kkeskin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 23:23:50 by kkeskin           #+#    #+#             */
-/*   Updated: 2026/03/30 04:43:43 by kkeskin          ###   ########.fr       */
+/*   Updated: 2026/03/30 05:00:44 by kkeskin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	assign_forks(t_philo *philo, t_fork *forks, int philo_id)
 	}
 }
 
-static int	philo_init(t_table *table)
+static void	philo_init(t_table *table)
 {
 	t_philo	*philo;
 	int		i;
@@ -57,8 +57,9 @@ int	init_program(t_table *table)
 		return (EXIT_FAILURE);
 	while (++i < table->philo_num)
 	{
-		safe_mutex_handle(&table->forks[i], INIT);
+		safe_mutex_handle(&table->forks[i].fork, INIT);
 		table->forks[i].fork_id = i;
 	}
 	philo_init(table);
+	return (EXIT_SUCCESS);
 }

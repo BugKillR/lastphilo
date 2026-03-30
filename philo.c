@@ -6,7 +6,7 @@
 /*   By: kkeskin <kkeskin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 16:45:08 by kkeskin           #+#    #+#             */
-/*   Updated: 2026/03/30 04:46:06 by kkeskin          ###   ########.fr       */
+/*   Updated: 2026/03/30 05:03:10 by kkeskin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	philo(int argc, char *argv[])
 	if (argument_control(argc, argv) || parser(argc, argv, &table))
 		return (EXIT_FAILURE);
 	if (init_program(&table))
-		return (EXIT_FAILURE);
+		return (free_thread_mutex(&table), EXIT_FAILURE);
 	//start_dinner(&table);
 	//clean(&table);
 	return (EXIT_SUCCESS);

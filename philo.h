@@ -6,7 +6,7 @@
 /*   By: kkeskin <kkeskin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 16:45:30 by kkeskin           #+#    #+#             */
-/*   Updated: 2026/03/30 04:50:05 by kkeskin          ###   ########.fr       */
+/*   Updated: 2026/03/30 05:03:24 by kkeskin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ typedef enum e_operations
 }				t_opeartions;
 
 typedef pthread_mutex_t	t_mutex;
+
+typedef struct s_table	t_table;
 
 // Structs
 
@@ -86,5 +88,8 @@ int		safe_malloc(size_t bytes, void *memory);
 int		safe_mutex_handle(t_mutex *mutex, t_opeartions op);
 int		safe_thread_handle(pthread_t *thread, void *(*routine)(void *),
 			void *data, t_opeartions op);
+// Free
+
+void	free_thread_mutex(t_table *table);
 
 #endif
