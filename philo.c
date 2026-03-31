@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkeskin <kkeskin@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: kijo <kijo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 16:45:08 by kkeskin           #+#    #+#             */
-/*   Updated: 2026/03/31 04:56:49 by kkeskin          ###   ########.fr       */
+/*   Updated: 2026/03/31 14:53:53 by kijo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,16 @@
 
 static int	argument_control(int argc, char *argv[])
 {
-	int	i;
-	int	k;
-	int	num;
+	long	num;
+	int		i;
+	int		k;
 
 	i = 1;
+	num = 0;
 	while (i < argc)
 	{
 		k = 0;
-		if (atoi_safe(argv[i], &num))
+		if (atol_safe(argv[i], &num))
 			return (1);
 		while (argv[i][k] == '-' || argv[i][k] == '+')
 			k++;
@@ -41,11 +42,11 @@ static int	parser(int argc, char *argv[], t_table *table)
 {
 	if (atoi_safe(argv[1], &(*table).philo_num))
 		return (EXIT_FAILURE);
-	else if (atoi_safe(argv[2], &(*table).time_to_die))
+	else if (atol_safe(argv[2], &(*table).time_to_die))
 		return (EXIT_FAILURE);
-	else if (atoi_safe(argv[3], &(*table).time_to_eat))
+	else if (atol_safe(argv[3], &(*table).time_to_eat))
 		return (EXIT_FAILURE);
-	else if (atoi_safe(argv[4], &(*table).time_to_sleep))
+	else if (atol_safe(argv[4], &(*table).time_to_sleep))
 		return (EXIT_FAILURE);
 	(*table).time_to_die *= 1000;
 	(*table).time_to_eat *= 1000;

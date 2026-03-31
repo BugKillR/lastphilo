@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkeskin <kkeskin@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: kijo <kijo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 17:03:16 by kkeskin           #+#    #+#             */
-/*   Updated: 2026/03/31 04:57:58 by kkeskin          ###   ########.fr       */
+/*   Updated: 2026/03/31 14:53:11 by kijo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	length_check(const char *str)
 int	atoi_safe(const char *nptr, int *set)
 {
 	short int	sign;
-	long int	res;
+	int			res;
 	int			i;
 
 	sign = 1;
@@ -62,11 +62,33 @@ int	atoi_safe(const char *nptr, int *set)
 	return (EXIT_FAILURE);
 }
 
-int	ft_isdigit(int c)
+int	atol_safe(const char *nptr, long *set)
 {
-	if ('0' <= c && c <= '9')
-		return (1);
-	return (0);
+	short int	sign;
+	long		res;
+	int			i;
+
+	sign = 1;
+	res = 0;
+	i = 0;
+	if (length_check(nptr))
+		return (EXIT_FAILURE);
+	while (nptr[i] == ' ' || (9 <= nptr[i] && nptr[i] <= 13))
+		i++;
+	if (nptr[i] == '-' || nptr[i] == '+')
+	{
+		if (nptr[i] == '-')
+			sign = -1;
+		i++;
+	}
+	while ('0' <= nptr[i] && nptr[i] <= '9')
+		res = (res * 10) + (nptr[i++] - '0');
+	res *= sign;
+	if (sign == -1 && res >= INT_MIN)
+		return (*set = res, EXIT_SUCCESS);
+	else if (sign == 1 && res <= INT_MAX)
+		return (*set = res, EXIT_SUCCESS);
+	return (EXIT_FAILURE);
 }
 
 void	write_status(t_status status, t_philo *philo)

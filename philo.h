@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkeskin <kkeskin@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: kijo <kijo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 16:45:30 by kkeskin           #+#    #+#             */
-/*   Updated: 2026/03/31 04:55:03 by kkeskin          ###   ########.fr       */
+/*   Updated: 2026/03/31 14:54:51 by kijo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ int		philo(int argc, char *argv[]);
 // Utils
 
 int		atoi_safe(const char *nptr, int *set);
+int		atol_safe(const char *nptr, long *set);
 int		ft_isdigit(int c);
 void	write_status(t_status status, t_philo *philo);
 void	print_error(char *message);
