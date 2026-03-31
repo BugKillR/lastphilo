@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkeskin <kkeskin@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: kijo <kijo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 23:23:50 by kkeskin           #+#    #+#             */
-/*   Updated: 2026/03/31 04:56:16 by kkeskin          ###   ########.fr       */
+/*   Updated: 2026/03/31 16:28:24 by kijo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	assign_forks(t_philo *philo, t_fork *forks, int philo_id)
 	philo_num = philo->table->philo_num;
 	philo->right_fork = &forks[(philo_id + 1) % philo_num];
 	philo->left_fork = &forks[philo_id];
-	if (philo_id % 2)
+	if (philo_id % 2 == 0)
 	{
 		philo->right_fork = &forks[philo_id];
 		philo->left_fork = &forks[(philo_id + 1) % philo_num];
@@ -55,6 +55,7 @@ int	init_program(t_table *table)
 			(void **)&table->philos))
 		return (EXIT_FAILURE);
 	safe_mutex_handle(&table->table_mutex, INIT);
+	safe_mutex_handle(&table->write_mutex, INIT);
 	if (safe_malloc(sizeof(t_fork) * table->philo_num,
 			(void **)&table->forks))
 		return (EXIT_FAILURE);

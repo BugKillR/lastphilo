@@ -6,7 +6,7 @@
 /*   By: kijo <kijo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 16:45:30 by kkeskin           #+#    #+#             */
-/*   Updated: 2026/03/31 14:54:51 by kijo             ###   ########.fr       */
+/*   Updated: 2026/03/31 16:31:12 by kijo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,24 +78,26 @@ typedef struct s_philo
 
 typedef struct s_table
 {
-	int		philo_num;
-	long	time_to_die;
-	long	time_to_eat;
-	long	time_to_sleep;
-	int		num_limit_meals;
-	long	start_simulation; // when sim started
-	int		end_simulation; // when every philo full or a philo died
-	int		all_philos_created; // when all philosophers malloced,to sync philos
-	t_mutex	table_mutex;
-	t_mutex	write_mutex;
-	t_fork	*forks;
-	t_philo	*philos;
+	int			philo_num;
+	long		time_to_die;
+	long		time_to_eat;
+	long		time_to_sleep;
+	int			num_limit_meals;
+	long		start_simulation; // when sim started
+	int			end_simulation; // when every philo full or a philo died
+	int			all_philos_created; // when all philosophers malloced,to sync philos
+	pthread_t	observer;
+	t_mutex		table_mutex;
+	t_mutex		write_mutex;
+	t_fork		*forks;
+	t_philo		*philos;
 }				t_table;
 
 // Core
 
 int		init_program(t_table *table);
 int		philo(int argc, char *argv[]);
+void	start_dinner(t_table *table);
 
 // Utils
 

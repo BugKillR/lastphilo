@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dinner.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkeskin <kkeskin@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: kijo <kijo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 21:00:21 by kkeskin           #+#    #+#             */
-/*   Updated: 2026/03/31 05:00:44 by kkeskin          ###   ########.fr       */
+/*   Updated: 2026/03/31 16:33:00 by kijo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	eat(t_philo *philo)
 	safe_mutex_handle(&philo->left_fork->fork, UNLOCK);
 }
 
-static void	dinner_simulation(void *data)
+static void	*dinner_simulation(void *data)
 {
 	t_philo	*philo;
 
@@ -50,6 +50,7 @@ static void	dinner_simulation(void *data)
 		better_usleep(philo->table->time_to_sleep, philo->table);
 		thinking(philo);
 	}
+	return (NULL);
 }
 
 void	start_dinner(t_table *table)
@@ -67,6 +68,7 @@ void	start_dinner(t_table *table)
 			safe_thread_handle(&table->philos[i].thread_id, dinner_simulation,
 				&table->philos[i], CREATE);
 	}
+	safe_thread_handle(&table->observer, observe_dinner, table, CREATE); // observer awakes here
 	table->start_simulation = get_time(MILLISECOND);
 	set_int(&table->table_mutex, &table->all_philos_created, 1);
 	i = -1;

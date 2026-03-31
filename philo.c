@@ -6,7 +6,7 @@
 /*   By: kijo <kijo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 16:45:08 by kkeskin           #+#    #+#             */
-/*   Updated: 2026/03/31 14:53:53 by kijo             ###   ########.fr       */
+/*   Updated: 2026/03/31 15:37:35 by kijo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	philo(int argc, char *argv[])
 		return (EXIT_FAILURE);
 	if (init_program(&table))
 		return (free_thread_mutex(&table), EXIT_FAILURE);
-	//start_dinner(&table);
+	start_dinner(&table);
 	clean(&table);
 	return (EXIT_SUCCESS);
 }

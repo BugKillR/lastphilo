@@ -6,7 +6,7 @@
 /*   By: kijo <kijo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 17:03:16 by kkeskin           #+#    #+#             */
-/*   Updated: 2026/03/31 14:53:11 by kijo             ###   ########.fr       */
+/*   Updated: 2026/03/31 16:22:14 by kijo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	write_status(t_status status, t_philo *philo)
 		else if (status == EATING)
 			printf("%-6ld %d is eating\n", elapsed, philo->id);
 		else if (status == SLEEPING)
-			printf("%-6ld %d is sleepin\n", elapsed, philo->id);
+			printf("%-6ld %d is sleeping\n", elapsed, philo->id);
 		else if (status == THINKING)
 			printf("%-6ld %d is thinking\n", elapsed, philo->id);
 		else if (status == DIED)
