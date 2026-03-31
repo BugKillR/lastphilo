@@ -6,7 +6,7 @@
 /*   By: kkeskin <kkeskin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 17:03:16 by kkeskin           #+#    #+#             */
-/*   Updated: 2026/03/29 23:46:29 by kkeskin          ###   ########.fr       */
+/*   Updated: 2026/03/31 04:57:58 by kkeskin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,30 @@ int	ft_isdigit(int c)
 	if ('0' <= c && c <= '9')
 		return (1);
 	return (0);
+}
+
+void	write_status(t_status status, t_philo *philo)
+{
+	long	elapsed;
+
+	elapsed = get_time(MILLISECOND) - philo->table->start_simulation;
+	if (philo->full)
+		return ;
+	safe_mutex_handle(&philo->table->write_mutex, LOCK);
+	if (!simulation_finished(philo->table))
+	{
+		if ((status == TAKE_FIRST_FORK || status == TAKE_SECOND_FORK))
+			printf("%-6ld %d has taken a fork\n", elapsed, philo->id);
+		else if (status == EATING)
+			printf("%-6ld %d is eating\n", elapsed, philo->id);
+		else if (status == SLEEPING)
+			printf("%-6ld %d is sleepin\n", elapsed, philo->id);
+		else if (status == THINKING)
+			printf("%-6ld %d is thinking\n", elapsed, philo->id);
+		else if (status == DIED)
+			printf("%-6ld %d is died\n", elapsed, philo->id);
+	}
+	safe_mutex_handle(&philo->table->write_mutex, UNLOCK);
 }
 
 void	print_error(char *message)

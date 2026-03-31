@@ -6,7 +6,7 @@
 /*   By: kkeskin <kkeskin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 23:23:50 by kkeskin           #+#    #+#             */
-/*   Updated: 2026/03/30 05:00:44 by kkeskin          ###   ########.fr       */
+/*   Updated: 2026/03/31 04:56:16 by kkeskin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ static void	assign_forks(t_philo *philo, t_fork *forks, int philo_id)
 	int	philo_num;
 
 	philo_num = philo->table->philo_num;
-	
-	
 	philo->right_fork = &forks[(philo_id + 1) % philo_num];
 	philo->left_fork = &forks[philo_id];
 	if (philo_id % 2)
@@ -41,6 +39,7 @@ static void	philo_init(t_table *table)
 		philo->full = 0;
 		philo->meals_counter = 0;
 		philo->table = table;
+		safe_mutex_handle(&philo->philo_mutex, INIT);
 		assign_forks(philo, table->forks, i);
 	}
 }
@@ -51,9 +50,13 @@ int	init_program(t_table *table)
 
 	i = -1;
 	table->end_simulation = 0;
-	if (safe_malloc(sizeof(t_philo) * table->philo_num, table->philos))
+	table->all_philos_created = 0;
+	if (safe_malloc(sizeof(t_philo) * table->philo_num,
+			(void **)&table->philos))
 		return (EXIT_FAILURE);
-	if (safe_malloc(sizeof(t_fork) * table->philo_num, table->forks))
+	safe_mutex_handle(&table->table_mutex, INIT);
+	if (safe_malloc(sizeof(t_fork) * table->philo_num,
+			(void **)&table->forks))
 		return (EXIT_FAILURE);
 	while (++i < table->philo_num)
 	{

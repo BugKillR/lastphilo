@@ -6,7 +6,7 @@
 /*   By: kkeskin <kkeskin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 16:45:30 by kkeskin           #+#    #+#             */
-/*   Updated: 2026/03/30 05:03:24 by kkeskin          ###   ########.fr       */
+/*   Updated: 2026/03/31 04:55:03 by kkeskin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,23 @@ typedef enum e_operations
 	DETACH,
 }				t_opeartions;
 
+typedef enum e_time
+{
+	SECOND,
+	MILLISECOND,
+	MICROSECOND,
+}				t_time;
+
+typedef enum e_status
+{
+	EATING,
+	SLEEPING,
+	THINKING,
+	TAKE_FIRST_FORK,
+	TAKE_SECOND_FORK,
+	DIED,
+}				t_status;
+
 typedef pthread_mutex_t	t_mutex;
 
 typedef struct s_table	t_table;
@@ -56,17 +73,21 @@ typedef struct s_philo
 	t_fork		*left_fork;
 	t_fork		*right_fork;
 	pthread_t	thread_id; // philos are threads
+	t_mutex		philo_mutex; // to avoid races with monitor
 }				t_philo;
 
 typedef struct s_table
 {
 	int		philo_num;
-	int		time_to_die;
-	int		time_to_eat;
-	int		time_to_sleep;
+	long	time_to_die;
+	long	time_to_eat;
+	long	time_to_sleep;
 	int		num_limit_meals;
-	int		start_simulation;
+	long	start_simulation; // when sim started
 	int		end_simulation; // when every philo full or a philo died
+	int		all_philos_created; // when all philosophers malloced,to sync philos
+	t_mutex	table_mutex;
+	t_mutex	write_mutex;
 	t_fork	*forks;
 	t_philo	*philos;
 }				t_table;
@@ -80,14 +101,30 @@ int		philo(int argc, char *argv[]);
 
 int		atoi_safe(const char *nptr, int *set);
 int		ft_isdigit(int c);
+void	write_status(t_status status, t_philo *philo);
 void	print_error(char *message);
 
 // Wrappers
 
-int		safe_malloc(size_t bytes, void *memory);
+int		safe_malloc(size_t bytes, void **memory);
 int		safe_mutex_handle(t_mutex *mutex, t_opeartions op);
 int		safe_thread_handle(pthread_t *thread, void *(*routine)(void *),
 			void *data, t_opeartions op);
+
+// Get-Set
+
+void	set_int(t_mutex *mutex, int *dest, int value);
+int		get_int(t_mutex *mutex, int *value);
+void	set_long(t_mutex *mutex, long *dest, long value);
+long	get_long(t_mutex *mutex, long *value);
+int		simulation_finished(t_table *table);
+
+// Sync
+
+long	get_time(t_time time_code);
+void	wait_all_philos(t_table *table);
+void	better_usleep(long usec, t_table *table);
+
 // Free
 
 void	free_thread_mutex(t_table *table);

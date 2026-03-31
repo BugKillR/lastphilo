@@ -6,16 +6,16 @@
 /*   By: kkeskin <kkeskin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 23:44:23 by kkeskin           #+#    #+#             */
-/*   Updated: 2026/03/30 05:06:38 by kkeskin          ###   ########.fr       */
+/*   Updated: 2026/03/30 20:57:38 by kkeskin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	safe_malloc(size_t bytes, void *memory)
+int	safe_malloc(size_t bytes, void **memory)
 {
-	memory = malloc(bytes);
-	if (memory == NULL)
+	*memory = malloc(bytes);
+	if (*memory == NULL)
 	{
 		print_error("Error occured on malloc!\n");
 		return (EXIT_FAILURE);

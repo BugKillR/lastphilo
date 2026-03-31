@@ -6,7 +6,7 @@
 /*   By: kkeskin <kkeskin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 16:45:08 by kkeskin           #+#    #+#             */
-/*   Updated: 2026/03/30 05:03:10 by kkeskin          ###   ########.fr       */
+/*   Updated: 2026/03/31 04:56:49 by kkeskin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,17 @@ static int	arg_count(int argc)
 	return (EXIT_SUCCESS);
 }
 
+static void	clean(t_table *table)
+{
+	free_thread_mutex(table);
+}
+
 int	philo(int argc, char *argv[])
 {
 	t_table	table;
 
+	table.philos = NULL;
+	table.forks = NULL;
 	if (arg_count(argc))
 		return (EXIT_FAILURE);
 	if (argument_control(argc, argv) || parser(argc, argv, &table))
@@ -88,6 +95,6 @@ int	philo(int argc, char *argv[])
 	if (init_program(&table))
 		return (free_thread_mutex(&table), EXIT_FAILURE);
 	//start_dinner(&table);
-	//clean(&table);
+	clean(&table);
 	return (EXIT_SUCCESS);
 }
