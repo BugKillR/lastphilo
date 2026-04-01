@@ -6,14 +6,16 @@
 /*   By: kkeskin <kkeskin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 21:00:21 by kkeskin           #+#    #+#             */
-/*   Updated: 2026/04/01 01:57:49 by kkeskin          ###   ########.fr       */
+/*   Updated: 2026/04/01 21:45:31 by kkeskin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	thinking(t_philo *philo)
+void	thinking(t_philo *philo)
 {
+	if (philo->table->philo_num % 2 == 0)
+		return ;
 	write_status(THINKING, philo);
 }
 
@@ -43,7 +45,7 @@ static void	*dinner_simulation(void *data)
 	wait_all_philos(philo->table);
 	set_long(&philo->philo_mutex, &philo->last_meal_time, get_time(MILLISECOND));
 	increase_int(&philo->table->table_mutex, &philo->table->threads_running_num);
-	
+	de_synchronize_philos(philo);
 	while (!simulation_finished(philo->table))
 	{
 		if (philo->full)

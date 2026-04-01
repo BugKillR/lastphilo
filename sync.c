@@ -6,7 +6,7 @@
 /*   By: kkeskin <kkeskin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 03:57:03 by kkeskin           #+#    #+#             */
-/*   Updated: 2026/04/01 01:41:39 by kkeskin          ###   ########.fr       */
+/*   Updated: 2026/04/01 21:44:59 by kkeskin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,18 @@ void	increase_int(t_mutex *mutex, int *value)
 	safe_mutex_handle(mutex, LOCK);
 	(*value)++;
 	safe_mutex_handle(mutex, UNLOCK);
+}
+
+void	de_synchronize_philos(t_philo *philo)
+{
+	if (philo->table->philo_num % 2 == 0)
+	{
+		if (philo->id % 2 == 0)
+			better_usleep(3e4, philo->table);
+	}
+	else
+	{
+		if (philo->id % 2)
+			thinking(philo);
+	}
 }

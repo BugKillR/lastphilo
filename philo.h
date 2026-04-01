@@ -6,7 +6,7 @@
 /*   By: kkeskin <kkeskin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 16:45:30 by kkeskin           #+#    #+#             */
-/*   Updated: 2026/04/01 01:42:10 by kkeskin          ###   ########.fr       */
+/*   Updated: 2026/04/01 21:46:02 by kkeskin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ typedef struct s_table
 int		init_program(t_table *table);
 int		philo(int argc, char *argv[]);
 void	start_dinner(t_table *table);
+void	thinking(t_philo *philo);
 
 // Observer
 
@@ -134,6 +135,7 @@ void	wait_all_philos(t_table *table);
 void	better_usleep(long usec, t_table *table);
 void	increase_int(t_mutex *mutex, int *value);
 int		all_threads_running(t_mutex *mutex, int *threads, int philo_num);
+void	de_synchronize_philos(t_philo *philo);
 
 // Free
 
