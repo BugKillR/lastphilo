@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kijo <kijo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kkeskin <kkeskin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 17:03:16 by kkeskin           #+#    #+#             */
-/*   Updated: 2026/03/31 16:22:14 by kijo             ###   ########.fr       */
+/*   Updated: 2026/04/01 01:48:43 by kkeskin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	write_status(t_status status, t_philo *philo)
 	if (philo->full)
 		return ;
 	safe_mutex_handle(&philo->table->write_mutex, LOCK);
-	if (!simulation_finished(philo->table))
+	if (status == DIED || !simulation_finished(philo->table))
 	{
 		if ((status == TAKE_FIRST_FORK || status == TAKE_SECOND_FORK))
 			printf("%-6ld %d has taken a fork\n", elapsed, philo->id);

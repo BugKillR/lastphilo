@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kijo <kijo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kkeskin <kkeskin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 23:23:50 by kkeskin           #+#    #+#             */
-/*   Updated: 2026/03/31 16:28:24 by kijo             ###   ########.fr       */
+/*   Updated: 2026/04/01 01:24:03 by kkeskin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	init_program(t_table *table)
 	i = -1;
 	table->end_simulation = 0;
 	table->all_philos_created = 0;
+	table->threads_running_num = 0;
 	if (safe_malloc(sizeof(t_philo) * table->philo_num,
 			(void **)&table->philos))
 		return (EXIT_FAILURE);

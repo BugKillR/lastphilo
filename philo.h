@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kijo <kijo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kkeskin <kkeskin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 16:45:30 by kkeskin           #+#    #+#             */
-/*   Updated: 2026/03/31 16:31:12 by kijo             ###   ########.fr       */
+/*   Updated: 2026/04/01 01:42:10 by kkeskin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ typedef struct s_table
 	long		start_simulation; // when sim started
 	int			end_simulation; // when every philo full or a philo died
 	int			all_philos_created; // when all philosophers malloced,to sync philos
+	int			threads_running_num;
 	pthread_t	observer;
 	t_mutex		table_mutex;
 	t_mutex		write_mutex;
@@ -98,6 +99,10 @@ typedef struct s_table
 int		init_program(t_table *table);
 int		philo(int argc, char *argv[]);
 void	start_dinner(t_table *table);
+
+// Observer
+
+void	*observe_dinner(void *data);
 
 // Utils
 
@@ -127,6 +132,8 @@ int		simulation_finished(t_table *table);
 long	get_time(t_time time_code);
 void	wait_all_philos(t_table *table);
 void	better_usleep(long usec, t_table *table);
+void	increase_int(t_mutex *mutex, int *value);
+int		all_threads_running(t_mutex *mutex, int *threads, int philo_num);
 
 // Free
 

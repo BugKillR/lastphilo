@@ -6,7 +6,7 @@
 /*   By: kkeskin <kkeskin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 03:57:03 by kkeskin           #+#    #+#             */
-/*   Updated: 2026/03/31 04:55:19 by kkeskin          ###   ########.fr       */
+/*   Updated: 2026/04/01 01:41:39 by kkeskin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,23 @@ void	better_usleep(long usec, t_table *table)
 				;
 		}
 	}
+}
+
+int	all_threads_running(t_mutex *mutex, int *threads, int philo_num)
+{
+	int	ret;
+
+	ret = 0;
+	safe_mutex_handle(mutex, LOCK);
+	if (*threads == philo_num)
+		ret = 1;
+	safe_mutex_handle(mutex, UNLOCK);
+	return (ret);
+}
+
+void	increase_int(t_mutex *mutex, int *value)
+{
+	safe_mutex_handle(mutex, LOCK);
+	(*value)++;
+	safe_mutex_handle(mutex, UNLOCK);
 }

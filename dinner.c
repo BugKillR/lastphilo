@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dinner.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kijo <kijo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kkeskin <kkeskin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 21:00:21 by kkeskin           #+#    #+#             */
-/*   Updated: 2026/03/31 16:33:00 by kijo             ###   ########.fr       */
+/*   Updated: 2026/04/01 01:57:49 by kkeskin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ static void	*dinner_simulation(void *data)
 
 	philo = (t_philo *)data;
 	wait_all_philos(philo->table);
+	set_long(&philo->philo_mutex, &philo->last_meal_time, get_time(MILLISECOND));
+	increase_int(&philo->table->table_mutex, &philo->table->threads_running_num);
+	
 	while (!simulation_finished(philo->table))
 	{
 		if (philo->full)
@@ -53,6 +56,20 @@ static void	*dinner_simulation(void *data)
 	return (NULL);
 }
 
+static void	*single_philo(void *data)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *)data;
+	wait_all_philos(philo->table);
+	set_long(&philo->philo_mutex, &philo->last_meal_time, get_time(MILLISECOND));
+	increase_int(&philo->table->table_mutex, &philo->table->threads_running_num);
+	write_status(TAKE_FIRST_FORK, philo);
+	while (!simulation_finished(philo->table))
+		usleep(200);
+	return (NULL);
+}
+
 void	start_dinner(t_table *table)
 {
 	int	i;
@@ -61,7 +78,7 @@ void	start_dinner(t_table *table)
 	if (table->num_limit_meals == 0)
 		return ;
 	else if (table->philo_num == 1)
-		; //TODO
+		safe_thread_handle(&table->philos[0].thread_id, single_philo, &table->philos[0], CREATE);
 	else
 	{
 		while (++i < table->philo_num)
@@ -74,4 +91,5 @@ void	start_dinner(t_table *table)
 	i = -1;
 	while (++i < table->philo_num)
 		safe_thread_handle(&table->philos[i].thread_id, NULL, NULL, JOIN);
+	set_int(&table->table_mutex, &table->end_simulation, 1);
 }
