@@ -6,7 +6,7 @@
 /*   By: kkeskin <kkeskin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 21:00:21 by kkeskin           #+#    #+#             */
-/*   Updated: 2026/04/02 12:31:37 by kkeskin          ###   ########.fr       */
+/*   Updated: 2026/04/02 13:27:05 by kkeskin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,6 @@ void	start_dinner(t_table *table)
 	i = -1;
 	while (++i < table->philo_num)
 		safe_thread_handle(&table->philos[i].thread_id, NULL, NULL, JOIN);
-	safe_thread_handle(&table->observer, NULL, NULL, JOIN);
 	set_int(&table->table_mutex, &table->end_simulation, 1);
+	safe_thread_handle(&table->observer, NULL, NULL, JOIN);
 }

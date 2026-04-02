@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kijo <kijo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kkeskin <kkeskin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 04:00:33 by kkeskin           #+#    #+#             */
-/*   Updated: 2026/03/31 14:58:19 by kijo             ###   ########.fr       */
+/*   Updated: 2026/04/02 13:16:24 by kkeskin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,6 @@ long	get_time(t_time time_code)
 	else if (time_code == MICROSECOND)
 		return ((tv.tv_sec * 1e6) + tv.tv_usec);
 	else
-		print_error("Wrong input to get_time()!\n");
+		print_error("Wrong input to get_time!\n");
 	return (-1);
 }
