@@ -6,7 +6,7 @@
 /*   By: kkeskin <kkeskin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 03:57:03 by kkeskin           #+#    #+#             */
-/*   Updated: 2026/04/02 13:41:08 by kkeskin          ###   ########.fr       */
+/*   Updated: 2026/04/02 13:48:29 by kkeskin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 void	wait_all_philos(t_table *table)
 {
 	while (!get_int(&table->table_mutex, &table->all_philos_created))
-		;
+		usleep(100);
 }
 
 void	better_usleep(long usec, t_table *table)
@@ -36,10 +36,7 @@ void	better_usleep(long usec, t_table *table)
 		if (remaining > 1e3)
 			usleep(remaining / 2);
 		else
-		{
-			while (get_time(MICROSECOND) - start < usec)
-				;
-		}
+			usleep(100);
 	}
 }
 
@@ -72,6 +69,9 @@ void	de_synchronize_philos(t_philo *philo)
 	else
 	{
 		if (philo->id % 2)
+		{
 			thinking(philo);
+			better_usleep(1e3, philo->table);
+		}
 	}
 }

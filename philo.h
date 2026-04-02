@@ -6,7 +6,7 @@
 /*   By: kkeskin <kkeskin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 16:45:30 by kkeskin           #+#    #+#             */
-/*   Updated: 2026/04/02 13:10:08 by kkeskin          ###   ########.fr       */
+/*   Updated: 2026/04/02 18:40:33 by kkeskin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ int		atoi_safe(const char *nptr, int *set);
 int		atol_safe(const char *nptr, long *set);
 int		ft_isdigit(int c);
 void	write_status(t_status status, t_philo *philo);
+void	get_forks(t_philo *philo, t_fork **first_fork, t_fork **second_fork);
 void	print_error(char *message);
 
 // Wrappers

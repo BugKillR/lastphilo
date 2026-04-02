@@ -6,7 +6,7 @@
 /*   By: kkeskin <kkeskin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 16:33:28 by kijo              #+#    #+#             */
-/*   Updated: 2026/04/02 13:31:12 by kkeskin          ###   ########.fr       */
+/*   Updated: 2026/04/02 16:22:39 by kkeskin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	*observe_dinner(void *data)
 	table = (t_table *)data;
 	while (!all_threads_running(&table->table_mutex,
 			&table->threads_running_num, table->philo_num))
-		;
+		usleep(100);
 	while (!simulation_finished(table))
 	{
 		i = -1;
@@ -47,6 +47,7 @@ void	*observe_dinner(void *data)
 				write_status(DIED, table->philos + i);
 			}
 		}
+		usleep(100);
 	}
 	return (NULL);
 }

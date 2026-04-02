@@ -6,7 +6,7 @@
 /*   By: kkeskin <kkeskin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 21:00:21 by kkeskin           #+#    #+#             */
-/*   Updated: 2026/04/02 13:31:21 by kkeskin          ###   ########.fr       */
+/*   Updated: 2026/04/02 18:40:31 by kkeskin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,20 @@ void	thinking(t_philo *philo)
 	if (philo->table->philo_num % 2 == 0)
 		return ;
 	write_status(THINKING, philo);
+	better_usleep(1e3, philo->table);
 }
 
 static void	eat(t_philo *philo)
 {
-	safe_mutex_handle(&philo->right_fork->fork, LOCK);
+	t_fork	*first_fork;
+	t_fork	*second_fork;
+
+	first_fork = NULL;
+	second_fork = NULL;
+	get_forks(philo, &first_fork, &second_fork);
+	safe_mutex_handle(&first_fork->fork, LOCK);
 	write_status(TAKE_FIRST_FORK, philo);
-	safe_mutex_handle(&philo->left_fork->fork, LOCK);
+	safe_mutex_handle(&second_fork->fork, LOCK);
 	write_status(TAKE_SECOND_FORK, philo);
 	set_long(&philo->philo_mutex, &philo->last_meal_time,
 		get_time(MILLISECOND));
@@ -33,8 +40,8 @@ static void	eat(t_philo *philo)
 	if (philo->table->num_limit_meals > 0
 		&& philo->meals_counter == philo->table->num_limit_meals)
 		set_int(&philo->philo_mutex, &philo->full, 1);
-	safe_mutex_handle(&philo->right_fork->fork, UNLOCK);
-	safe_mutex_handle(&philo->left_fork->fork, UNLOCK);
+	safe_mutex_handle(&first_fork->fork, UNLOCK);
+	safe_mutex_handle(&second_fork->fork, UNLOCK);
 }
 
 static void	*dinner_simulation(void *data)
