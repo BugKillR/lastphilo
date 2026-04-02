@@ -6,7 +6,7 @@
 /*   By: kkeskin <kkeskin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 16:33:28 by kijo              #+#    #+#             */
-/*   Updated: 2026/04/02 13:27:05 by kkeskin          ###   ########.fr       */
+/*   Updated: 2026/04/02 13:31:12 by kkeskin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	philo_died(t_philo *philo)
 		return (0);
 	elapsed = get_time(MILLISECOND) - get_long(&philo->philo_mutex,
 			&philo->last_meal_time);
-	time_to_die = philo->table->time_to_die;
+	time_to_die = philo->table->time_to_die / 1e3;
 	if (elapsed > time_to_die)
 		return (1);
 	return (0);
