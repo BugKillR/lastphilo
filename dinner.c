@@ -6,7 +6,7 @@
 /*   By: kkeskin <kkeskin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 21:00:21 by kkeskin           #+#    #+#             */
-/*   Updated: 2026/04/01 21:45:31 by kkeskin          ###   ########.fr       */
+/*   Updated: 2026/04/02 12:31:37 by kkeskin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,10 @@ static void	*dinner_simulation(void *data)
 
 	philo = (t_philo *)data;
 	wait_all_philos(philo->table);
-	set_long(&philo->philo_mutex, &philo->last_meal_time, get_time(MILLISECOND));
-	increase_int(&philo->table->table_mutex, &philo->table->threads_running_num);
+	set_long(&philo->philo_mutex, &philo->last_meal_time,
+		get_time(MILLISECOND));
+	increase_int(&philo->table->table_mutex,
+		&philo->table->threads_running_num);
 	de_synchronize_philos(philo);
 	while (!simulation_finished(philo->table))
 	{
@@ -64,8 +66,10 @@ static void	*single_philo(void *data)
 
 	philo = (t_philo *)data;
 	wait_all_philos(philo->table);
-	set_long(&philo->philo_mutex, &philo->last_meal_time, get_time(MILLISECOND));
-	increase_int(&philo->table->table_mutex, &philo->table->threads_running_num);
+	set_long(&philo->philo_mutex, &philo->last_meal_time,
+		get_time(MILLISECOND));
+	increase_int(&philo->table->table_mutex,
+		&philo->table->threads_running_num);
 	write_status(TAKE_FIRST_FORK, philo);
 	while (!simulation_finished(philo->table))
 		usleep(200);
@@ -80,18 +84,21 @@ void	start_dinner(t_table *table)
 	if (table->num_limit_meals == 0)
 		return ;
 	else if (table->philo_num == 1)
-		safe_thread_handle(&table->philos[0].thread_id, single_philo, &table->philos[0], CREATE);
+		safe_thread_handle(&table->philos[0].thread_id,
+			single_philo, &table->philos[0], CREATE);
 	else
 	{
 		while (++i < table->philo_num)
 			safe_thread_handle(&table->philos[i].thread_id, dinner_simulation,
 				&table->philos[i], CREATE);
 	}
-	safe_thread_handle(&table->observer, observe_dinner, table, CREATE); // observer awakes here
+	safe_thread_handle(&table->observer,
+		observe_dinner, table, CREATE);
 	table->start_simulation = get_time(MILLISECOND);
 	set_int(&table->table_mutex, &table->all_philos_created, 1);
 	i = -1;
 	while (++i < table->philo_num)
 		safe_thread_handle(&table->philos[i].thread_id, NULL, NULL, JOIN);
+	safe_thread_handle(&table->observer, NULL, NULL, JOIN);
 	set_int(&table->table_mutex, &table->end_simulation, 1);
 }

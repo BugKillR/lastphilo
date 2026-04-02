@@ -6,7 +6,7 @@
 /*   By: kkeskin <kkeskin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 16:45:30 by kkeskin           #+#    #+#             */
-/*   Updated: 2026/04/01 21:46:02 by kkeskin          ###   ########.fr       */
+/*   Updated: 2026/04/02 13:10:08 by kkeskin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ typedef struct s_table
 	int			num_limit_meals;
 	long		start_simulation; // when sim started
 	int			end_simulation; // when every philo full or a philo died
-	int			all_philos_created; // when all philosophers malloced,to sync philos
+	int			all_philos_created; // when all philos malloced,to sync philos
 	int			threads_running_num;
 	pthread_t	observer;
 	t_mutex		table_mutex;
